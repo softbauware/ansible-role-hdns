@@ -48,7 +48,7 @@
       Auth-API-Token: "{{ api_token }}"
     body: '{ "zone_id": "{{ zone_id }}", "type": "{{ item.type }}", "name": "{{ item.name }}", "value": "{{ item.value }}", "ttl": {{ item.ttl | default(ttl) }} }'
   when: "item.type + item.name + item.value not in record_list"
-  loop: "{{ zone.entries }}"
+  loop: "{{ zone.records }}"
   changed_when: true
 
 - name: "reset local record list"
@@ -58,9 +58,9 @@
 - name: "add records to local record list"
   set_fact:
     record_list: "{{ record_list + [ item.type + item.name + item.value ] }}"
-  loop: "{{ zone.entries }}"
+  loop: "{{ zone.records }}"
 
-- name: "remove records from server which are not defined in entries"
+- name: "remove records from server which are not defined in records"
   uri:
     url: "{{ api_endpoint }}/records/{{ item.id }}"
     method: "DELETE"
