@@ -71,11 +71,11 @@ No dependencies to other roles are used. The role only uses url module from ansi
                 value: "0 mx.example.com" # note the 0 here in front. this is the mx priority
               - type: "A"
                 name: "@"
-                value: "159.69.157.141"
+                value: "134.243.112.88"
                 ttl: 60 # remove this to use the default priority
               - type: "A"
                 name: "www"
-                value: "159.69.157.141"
+                value: "134.243.112.88"
 ```
 
 ## License
