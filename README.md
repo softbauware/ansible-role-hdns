@@ -4,23 +4,79 @@ Ansible role for automatic administration of Hetzner DNS
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The role is tested on the following operating systems:
+
+- Debian > 9
+- Ubuntu > 18.04
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+You can always find a up to date list of all variables in [defaults/main.yml](https://github.com/softbauware/ansible-role-hdns/blob/main/defaults/main.yml) file.
+
+```yaml
+# This is the Hetzner API Token.
+# You can create one here: https://dns.hetzner.com/settings/api-token
+api_token: ""
+
+# don't touch this if you don't know what you are doing
+api_endpoint: "https://dns.hetzner.com/api/v1"
+
+# this is the default ttl for all records and zones.
+# The TTL in a zone defines the TTL for the SOA Entry!
+ttl: 86400
+
+# Set this to true if you want unused records to be removed on the server.
+# Use with care because it will remove all zones and and records which are not in zones var.
+remove_undefined: false
+
+# This is the variable which defines the zones and records.
+# You can find a example below how to set this up correctly.
+zones: []
+```
 
 ## Dependencies
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No dependencies to other roles are used. The role only uses url module from ansible.
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+---
+- hosts: localhost
+  connection: local # not nessesary but useful when localhost has no ssh server
+  gather_facts: false
+  tasks:
+    - name: "execute hdns role"
+      include_role:
+        name: "hdns"
+      vars:
+        api_token: "12345"
+        remove_undefined: false # be careful here, see above what this does
+        ttl: 3600 # use this to overwrite the default priority
+        zones:
+          - name: "example.com"
+            ttl: 86400 # remove this to use default priority
+            records:
+              - type: "NS"
+                name: "@"
+                value: "helium.ns.hetzner.de."
+              - type: "NS"
+                name: "@"
+                value: "hydrogen.ns.hetzner.com."
+              - type: "NS"
+                name: "@"
+                value: "oxygen.ns.hetzner.com."
+              - type: "MX"
+                name: "@"
+                value: "0 mx.example.com" # note the 0 here in front. this is the mx priority
+              - type: "A"
+                name: "@"
+                value: "159.69.157.141"
+                ttl: 60 # remove this to use the default priority
+              - type: "A"
+                name: "www"
+                value: "159.69.157.141"
+```
 
 ## License
 
