@@ -1,3 +1,4 @@
+---
 - name: "print zone name"
   debug:
     msg: "{{ zone.name }}"
