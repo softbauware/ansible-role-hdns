@@ -6,4 +6,4 @@
     - name: "execute ansible-role-hdns role"
       include_role:
         name: "ansible-role-hdns"
-      vars:
+      vars: []
