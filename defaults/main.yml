@@ -1,2 +1,8 @@
 ---
 # defaults file for hdns
+
+api_token: ""
+api_endpoint: "https://dns.hetzner.com/api/v1"
+ttl: 86400
+remove_undefined: false
+zones: []
