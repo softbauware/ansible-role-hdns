@@ -25,9 +25,7 @@ jobs:
 
       - name: Prepare Python Environment
         run: |
-          pip install --upgrade yamllint virtualenv
-          virtualenv venv
-          source venv/bin/activate
+          pip install --upgrade yamllint
           yamllint --version
 
       - name: Yamllint
