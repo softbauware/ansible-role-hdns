@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  remote_user: root
+  become: true
+  tasks:
+    - name: "execute ansible-role-hdns role"
+      include_role:
+        name: "ansible-role-hdns"
+      vars:
