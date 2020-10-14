@@ -84,4 +84,4 @@ GPL 3.0+
 
 ## Author Information
 
-SOFTBAUWARE GmbH <info@softbauware.de>
+SOFTBAUWARE GmbH <https://softbauware.de>
