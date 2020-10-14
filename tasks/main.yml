@@ -1,2 +1,59 @@
 ---
 # tasks file for hdns
+
+- name: "get a list of all zones"
+  uri:
+    url: "{{ api_endpoint }}/zones"
+    method: "GET"
+    return_content: true
+    headers:
+      Auth-API-Token: "{{ api_token }}"
+  register: "json_zone_list"
+
+- name: "reset local zone list"
+  set_fact:
+    zone_list: []
+
+- name: "add zones to local zone list"
+  set_fact:
+    zone_list: "{{ zone_list + [ item.name ] }}"
+  loop: "{{ json_zone_list.json.zones }}"
+
+- name: "create zones missing on server"
+  uri:
+    url: "{{ api_endpoint }}/zones"
+    method: "POST"
+    return_content: true
+    body_format: "json"
+    headers:
+      Auth-API-Token: "{{ api_token }}"
+    body: '{ "name": "{{ item.name }}", "ttl": {{ item.ttl | default(ttl) }} }'
+  when: "item.name not in zone_list"
+  loop: "{{ zones }}"
+  changed_when: true
+
+- name: "reset local zone list"
+  set_fact:
+    zone_list: []
+
+- name: "add zones to local zone list"
+  set_fact:
+    zone_list: "{{ zone_list + [ item.name ] }}"
+  loop: "{{ zones }}"
+
+- name: "remove zones from server which are not defined in vars"
+  uri:
+    url: "{{ api_endpoint }}/zones/{{ item.id }}"
+    method: "DELETE"
+    return_content: true
+    headers:
+      Auth-API-Token: "{{ api_token }}"
+  when: "remove_undefined and item.name not in zone_list"
+  loop: "{{ json_zone_list.json.zones }}"
+  changed_when: true
+
+- name: "update zone records"
+  include_tasks: records.yml
+  loop: "{{ zones }}"
+  loop_control:
+    loop_var: zone
