@@ -68,7 +68,7 @@ No dependencies to other roles are used. The role only uses url module from ansi
                 value: "oxygen.ns.hetzner.com."
               - type: "MX"
                 name: "@"
-                value: "0 mx.example.com" # note the 0 here in front. this is the mx priority
+                value: "0 mx.example.com." # note the 0 here in front. this is the mx priority
               - type: "A"
                 name: "@"
                 value: "134.243.112.88"
