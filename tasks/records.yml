@@ -36,9 +36,6 @@
     record_list: "{{ record_list + [ item.type + item.name + item.value ] }}"
   loop: "{{ json_record_list.json.records }}"
 
-- debug:
-    msg: "{{ record_list }}"
-
 - name: "create records missing on server"
   uri:
     url: "{{ api_endpoint }}/records"
