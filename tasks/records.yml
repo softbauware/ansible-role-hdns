@@ -44,7 +44,7 @@
     body_format: "json"
     headers:
       Auth-API-Token: "{{ api_token }}"
-    body: '{ "zone_id": "{{ zone_id }}", "type": "{{ item.type }}", "name": "{{ item.name }}", "value": "{{ item.value }}", "ttl": {{ item.ttl | default(ttl) }} }'
+    body: '{ "zone_id": "{{ zone_id }}", "type": "{{ item.type }}", "name": "{{ item.name }}", "value": "{{ item.value | replace(''"'', "") }}", "ttl": {{ item.ttl | default(ttl) }} }'
   when: "item.type + item.name + item.value not in record_list"
   loop: "{{ zone.records }}"
   changed_when: true
