@@ -31,6 +31,7 @@ jobs:
 
       - name: Install Software Requirements
         run: |
+          pip install --upgrade ansible
           pip install --upgrade ansible-lint
           ansible-lint --version
 
