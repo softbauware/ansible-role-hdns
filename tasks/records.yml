@@ -33,7 +33,7 @@
 
 - name: "add records to local record list"
   set_fact:
-    record_list: "{{ record_list + [ item.type + item.name + item.value ] }}"
+    record_list: '{{ record_list + [ item.type + item.name + item.value | replace(''"'', "") ] }}'
   loop: "{{ json_record_list.json.records }}"
 
 - name: "create records missing on server"
