@@ -1,7 +1,7 @@
 ---
 # tasks file for hdns
 
-- name: "get a list of all zones"
+- name: "Get a list of all zones"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/zones"
     method: "GET"
@@ -10,16 +10,16 @@
       Auth-API-Token: "{{ api_token }}"
   register: "json_zone_list"
 
-- name: "reset local zone list"
+- name: "Reset local zone list"
   ansible.builtin.set_fact:
     zone_list: []
 
-- name: "add zones to local zone list"
+- name: "Add zones to local zone list"
   ansible.builtin.set_fact:
     zone_list: "{{ zone_list + [ item.name ] }}"
   loop: "{{ json_zone_list.json.zones }}"
 
-- name: "create zones missing on server"
+- name: "Create zones missing on server"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/zones"
     method: "POST"
@@ -32,16 +32,16 @@
   loop: "{{ zones }}"
   changed_when: true
 
-- name: "reset local zone list"
+- name: "Reset local zone list"
   ansible.builtin.set_fact:
     zone_list: []
 
-- name: "add zones to local zone list"
+- name: "Add zones to local zone list"
   ansible.builtin.set_fact:
     zone_list: "{{ zone_list + [ item.name ] }}"
   loop: "{{ zones }}"
 
-- name: "remove zones from server which are not defined in vars"
+- name: "Remove zones from server which are not defined in vars"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/zones/{{ item.id }}"
     method: "DELETE"
@@ -52,7 +52,7 @@
   loop: "{{ json_zone_list.json.zones }}"
   changed_when: true
 
-- name: "update zone records"
+- name: "Update zone records"
   ansible.builtin.include_tasks: records.yml
   loop: "{{ zones }}"
   loop_control:

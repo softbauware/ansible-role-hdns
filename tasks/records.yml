@@ -1,9 +1,9 @@
 ---
-- name: "print zone name"
+- name: "Print zone name"
   ansible.builtin.debug:
     msg: "{{ zone.name }}"
 
-- name: "get zone information"
+- name: "Get zone information"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/zones"
     method: "GET"
@@ -12,13 +12,13 @@
       Auth-API-Token: "{{ api_token }}"
   register: "temp_zone_list_for_zone_id"
 
-- name: "get zone id"
+- name: "Get zone id"
   ansible.builtin.set_fact:
     zone_id: "{{ item.id }}"
   loop: "{{ temp_zone_list_for_zone_id.json.zones }}"
   when: "item.name == zone.name"
 
-- name: "get all records of current zone"
+- name: "Get all records of current zone"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/records?zone_id={{ zone_id }}"
     method: "GET"
@@ -27,16 +27,16 @@
       Auth-API-Token: "{{ api_token }}"
   register: "json_record_list"
 
-- name: "reset local record list"
+- name: "Reset local record list"
   ansible.builtin.set_fact:
     record_list: []
 
-- name: "add records to local record list"
+- name: "Add records to local record list"
   ansible.builtin.set_fact:
     record_list: '{{ record_list + [ item.type + item.name + item.value | replace(''"'', "") ] }}'
   loop: "{{ json_record_list.json.records }}"
 
-- name: "create records missing on server"
+- name: "Create records missing on server"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/records"
     method: "POST"
@@ -49,16 +49,16 @@
   loop: "{{ zone.records }}"
   changed_when: true
 
-- name: "reset local record list"
+- name: "Reset local record list"
   ansible.builtin.set_fact:
     record_list: []
 
-- name: "add records to local record list"
+- name: "Add records to local record list"
   ansible.builtin.set_fact:
     record_list: "{{ record_list + [ item.type + item.name + item.value ] }}"
   loop: "{{ zone.records }}"
 
-- name: "remove records from server which are not defined in records"
+- name: "Remove records from server which are not defined in records"
   ansible.builtin.uri:
     url: "{{ api_endpoint }}/records/{{ item.id }}"
     method: "DELETE"
