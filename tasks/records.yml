@@ -1,10 +1,10 @@
 ---
 - name: "print zone name"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ zone.name }}"
 
 - name: "get zone information"
-  uri:
+  ansible.builtin.uri:
     url: "{{ api_endpoint }}/zones"
     method: "GET"
     return_content: true
@@ -13,13 +13,13 @@
   register: "temp_zone_list_for_zone_id"
 
 - name: "get zone id"
-  set_fact:
+  ansible.builtin.set_fact:
     zone_id: "{{ item.id }}"
   loop: "{{ temp_zone_list_for_zone_id.json.zones }}"
   when: "item.name == zone.name"
 
 - name: "get all records of current zone"
-  uri:
+  ansible.builtin.uri:
     url: "{{ api_endpoint }}/records?zone_id={{ zone_id }}"
     method: "GET"
     return_content: true
@@ -28,16 +28,16 @@
   register: "json_record_list"
 
 - name: "reset local record list"
-  set_fact:
+  ansible.builtin.set_fact:
     record_list: []
 
 - name: "add records to local record list"
-  set_fact:
+  ansible.builtin.set_fact:
     record_list: '{{ record_list + [ item.type + item.name + item.value | replace(''"'', "") ] }}'
   loop: "{{ json_record_list.json.records }}"
 
 - name: "create records missing on server"
-  uri:
+  ansible.builtin.uri:
     url: "{{ api_endpoint }}/records"
     method: "POST"
     return_content: true
@@ -50,16 +50,16 @@
   changed_when: true
 
 - name: "reset local record list"
-  set_fact:
+  ansible.builtin.set_fact:
     record_list: []
 
 - name: "add records to local record list"
-  set_fact:
+  ansible.builtin.set_fact:
     record_list: "{{ record_list + [ item.type + item.name + item.value ] }}"
   loop: "{{ zone.records }}"
 
 - name: "remove records from server which are not defined in records"
-  uri:
+  ansible.builtin.uri:
     url: "{{ api_endpoint }}/records/{{ item.id }}"
     method: "DELETE"
     return_content: true
