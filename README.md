@@ -31,9 +31,13 @@ api_endpoint: "https://dns.hetzner.com/api/v1"
 # The TTL in a zone defines the TTL for the SOA Entry!
 ttl: 86400
 
-# Set this to true if you want unused records to be removed on the server.
-# Use with care because it will remove all zones and and records which are not in zones var.
-remove_undefined: false
+# Set this to true if you want unused zones to be removed from the server.
+# Use with care because it will remove all zones which are not in "zones" var.
+remove_missing_zones: false
+
+# Set this to true if you want unused records to be removed from the server.
+# Use with care because it will remove all records which are not in "zones" var.
+remove_missing_records: false
 
 # This is the variable which defines the zones and records.
 # You can find a example below how to set this up correctly.
@@ -57,7 +61,8 @@ No dependencies to other roles are used. The role only uses url module from ansi
         name: "hdns"
       vars:
         api_token: "12345"
-        remove_undefined: false # be careful here, see above what this does
+        remove_missing_zones: false # be careful here, see above what this does
+        remove_missing_records: false # be careful here, see above what this does
         ttl: 3600 # use this to overwrite the default priority
         zones:
           - name: "example.com"

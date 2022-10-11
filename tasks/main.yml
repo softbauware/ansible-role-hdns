@@ -48,7 +48,7 @@
     return_content: true
     headers:
       Auth-API-Token: "{{ api_token }}"
-  when: "remove_undefined and item.name not in zone_list"
+  when: "remove_missing_zones and item.name not in zone_list"
   loop: "{{ json_zone_list.json.zones }}"
   changed_when: true
 

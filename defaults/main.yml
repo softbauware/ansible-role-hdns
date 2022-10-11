@@ -4,5 +4,6 @@
 api_token: ""
 api_endpoint: "https://dns.hetzner.com/api/v1"
 ttl: 86400
-remove_undefined: false
+remove_missing_zones: false
+remove_missing_records: false
 zones: []
