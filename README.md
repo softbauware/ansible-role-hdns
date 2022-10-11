@@ -1,7 +1,7 @@
 # ansible-role-hdns [![GitHub Actions Build](https://img.shields.io/github/workflow/status/softbauware/ansible-role-hdns/ansible-lint)](https://github.com/softbauware/ansible-role-hdns/actions) [![GitHub license](https://img.shields.io/github/license/softbauware/ansible-role-hdns)](https://github.com/softbauware/ansible-role-hdns/blob/master/LICENSE)
 
-[![Galaxy Quality Score](https://img.shields.io/ansible/quality/hdns)](https://github.com/softbauware/ansible-role-hdns)
-[![Galaxy Downloads](https://img.shields.io/ansible/role/d/hdns)](https://github.com/softbauware/ansible-role-hdns)
+[![Galaxy Quality Score](https://img.shields.io/ansible/quality/51348)](https://github.com/softbauware/ansible-role-hdns)
+[![Galaxy Downloads](https://img.shields.io/ansible/role/d/51348)](https://github.com/softbauware/ansible-role-hdns)
 [![Repo Size](https://img.shields.io/github/repo-size/softbauware/ansible-role-hdns.svg)](https://github.com/softbauware/ansible-role-hdns)
 
 ---
