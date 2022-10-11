@@ -16,7 +16,7 @@
 
 - name: "Add zones to local zone list"
   ansible.builtin.set_fact:
-    zone_list: "{{ zone_list + [ item.name ] }}"
+    zone_list: "{{ zone_list + [item.name] }}"
   loop: "{{ json_zone_list.json.zones }}"
 
 - name: "Create zones missing on server"
@@ -38,7 +38,7 @@
 
 - name: "Add zones to local zone list"
   ansible.builtin.set_fact:
-    zone_list: "{{ zone_list + [ item.name ] }}"
+    zone_list: "{{ zone_list + [item.name] }}"
   loop: "{{ zones }}"
 
 - name: "Remove zones from server which are not defined in vars"
