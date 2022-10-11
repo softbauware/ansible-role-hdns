@@ -7,6 +7,7 @@ galaxy_info:
   issue_tracker_url: https://github.com/softbauware/ansible-role-hdns/issues
   license: GPL-3.0-only
   min_ansible_version: "2.9"
+  github_branch: "main"
   platforms:
     - name: Debian
       versions:
