@@ -65,6 +65,6 @@
     return_content: true
     headers:
       Auth-API-Token: "{{ api_token }}"
-  when: 'remove_undefined and item.type + item.name + item.value not in record_list and item.type != "SOA"'
+  when: 'remove_missing_records and item.type + item.name + item.value | replace(''"'', "") not in record_list and item.type != "SOA"'
   loop: "{{ json_record_list.json.records }}"
   changed_when: true
