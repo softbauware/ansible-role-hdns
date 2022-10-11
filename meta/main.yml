@@ -1,25 +1,27 @@
 ---
-dependencies: []
-
 galaxy_info:
   role_name: hdns
   author: softbauware
-  description: Ansible role for automatic administration of Hetzner DNS
-  company: "SOFTBAUWARE GmbH"
+  description: Ansible role for automatic management of DNS zones and records in the Hetzner DNS Console
+  company: SOFTBAUWARE GmbH
   issue_tracker_url: https://github.com/softbauware/ansible-role-hdns/issues
   license: GPL-3.0-only
-  min_ansible_version: 2.9
+  min_ansible_version: "2.9"
   platforms:
     - name: Debian
       versions:
+        - bullseye
         - buster
         - stretch
     - name: Ubuntu
       versions:
-        - bionic
+        - jammy
         - focal
+        - bionic
   galaxy_tags:
     - hetzner
     - dns
     - console
     - api
+
+dependencies: []
