@@ -10,6 +10,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Run markdownlint (mdl)
-        uses: bewuethr/mdl-action@master
+        uses: bewuethr/mdl-action@main
         with:
           style-file: .github/workflows/markdownlint.rb
